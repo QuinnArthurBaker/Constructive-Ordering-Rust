@@ -1,5 +1,5 @@
 # Constructive Ordering Finder in Rust
-This repository contains Rust implementations of two algorithms to compute the number of constructive orderings of the groups ℤ/nℤ, and a supporting library. Consult each subproject for specific READMEs
+This repository contains Rust implementations of two algorithms to compute the number of constructive orderings of the groups ℤ<sub>n</sub>, and a supporting library. Consult each subproject for specific READMEs
 
 ## Building and Running
 All projects can be built with `cargo`:
