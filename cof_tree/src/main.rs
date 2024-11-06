@@ -1,10 +1,11 @@
 //use cof::tree_search;
 use num::{BigUint, FromPrimitive};
+use std::collections::VecDeque;
 use std::thread;
 use std::sync::mpsc;
 use cof_tree::N;
 
-pub fn tree_search(rem: &mut Vec<usize>, daggers: &mut Vec<bool>, current_sum: &mut usize, total: &mut BigUint){
+pub fn tree_search(rem: &mut VecDeque<usize>, daggers: &mut Vec<bool>, current_sum: &mut usize, total: &mut BigUint){
     if rem.is_empty() {
         *total += 1_usize;
         return;
@@ -16,13 +17,15 @@ pub fn tree_search(rem: &mut Vec<usize>, daggers: &mut Vec<bool>, current_sum: &
     }
 
     for _i in 0..rem.len() {
-        let popped = rem[0];
+        //let popped = rem[0];
         //drain (remove) the first element of rem. 
-         rem.drain(0..1);
+         //rem.drain(0..1);
+        let popped = rem.pop_front().unwrap();
         //rem.retain(|&x|x != popped);
         let save_sum = *current_sum;
-        *current_sum += popped;
-        *current_sum %= N; 
+        //*current_sum += popped;
+        //*current_sum %= N;
+        *current_sum = (*current_sum + popped)%N; 
 
         if !daggers[*current_sum]{
             daggers[*current_sum] = true;
@@ -30,7 +33,8 @@ pub fn tree_search(rem: &mut Vec<usize>, daggers: &mut Vec<bool>, current_sum: &
 			daggers[*current_sum] = false;
         }      
         *current_sum = save_sum;
-        rem.push(popped); 
+        //*current_sum = (*current_sum-popped)%N;
+        rem.push_back(popped); 
     }
 }
 
@@ -38,11 +42,11 @@ pub fn tree_search(rem: &mut Vec<usize>, daggers: &mut Vec<bool>, current_sum: &
 fn main() {
     println!("Hello, world!");
     //let mut nat = kth_permutation(N, zero.clone());
-    let mut rem: Vec<usize> = Vec::new();
+    let mut rem: VecDeque<usize> = VecDeque::new();
     let mut daggers: Vec<bool> = vec![false; N];
 	daggers[0] = true;
     for i in 1..N{
-        rem.push(i);
+        rem.push_back(i);
     }
 
 
